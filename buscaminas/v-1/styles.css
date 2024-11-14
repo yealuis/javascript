@@ -9,6 +9,7 @@ body {
     font-style: normal;
     margin: 0;
     padding: 0;
+    -webkit-user-select: text;
     user-select: none;
     background: lightgray;
     text-align: center;
