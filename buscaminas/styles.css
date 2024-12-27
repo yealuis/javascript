@@ -1,0 +1,72 @@
+* {
+    /*transition: all 1s;*/
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Roboto", serif;
+    font-weight: 400;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+    -webkit-user-select: text;
+    user-select: none;
+    background: #00224D;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #9FE2BF;
+    text-shadow: 5px 5px 10px black;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    height: 100%;
+    background: linear-gradient(to right,#ddd, #00224D);
+    padding: 25px;
+    position: fixed;
+    top: 0;
+}
+
+table {
+    background: lightgray;
+    margin: 5px auto;
+    border-spacing: 0;
+    padding: 0;
+    border: #9FE2BF 7px solid;
+    border-radius: 10px;
+}
+
+td {
+    border: rgba(0, 0, 0, .25) 1px solid;
+    width: 27px;
+    height: 27px;
+    text-align: center;
+    color: black;
+}
+
+#new-game, td, #mines, #settings {
+    box-shadow: inset 3px 3px 0 0 rgba(255, 255, 255, .5), inset -3px -3px 0 0 rgba(0, 0, 0, .5);
+}
+
+#new-game, #mines, #settings {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#new-game, #settings {
+    cursor: pointer;
+    background-color: #9FE2BF;
+}
+
+#mines {
+    font-size: 2rem;
+    background-color: #ddd;
+}

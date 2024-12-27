@@ -1,6 +1,6 @@
 let rows = 20
 let columns = 20
-let cellSize = 30
+let cellSize = 27
 let mines = rows * columns * 0.1
 let onGame = true
 let gameStarted = false
@@ -8,39 +8,43 @@ let marks = 0
 
 async function settings() {
     const {
-      value: settings
+        value: settings
     } = await swal.fire({
-      title: "Ajustes",
-      html: `
-              difficulty &nbsp; (mines/área)
-              <br>
-              <br>
-              <input onchange="cambiarValor()" oninput="this.onchange()" id="difficulty" type="range" min="10" max="40" step="1" value="${100 * mines / (rows * columns)}" onchange="">
-              <span id="value-difficulty">${100 * mines / (rows * columns)}%</span>
-              <br>
-              <br>
-              rows
-              <br>
-              <input class="swal2-input" type="number" value=${rows} placeholder="rows" id="rows" min="10" max="1000" step="1">
-              <br>
-              columns
-              <br>
-              <input class="swal2-input" type="number" value=${columns} placeholder="columns" id="columns" min="10" max="1000" step="1">
-              <br>
-              `,
-      confirmButtonText: "Establecer",
-      cancelButtonText: "Cancelar",
-      showCancelButton: true,
-      preConfirm: () => {
-        return {
-          columns: document.getElementById("columns").value,
-          rows: document.getElementById("rows").value,
-          difficulty: document.getElementById("difficulty").value
+        title: "Ajustes",
+        html: `
+            Dificultad (minas/área)
+            <br>
+            <br>
+            <input onchange="cambiarValor()" oninput="this.onchange()" id="difficulty" type="range" min="10" max="40" step="1" value="${100 * mines / (rows * columns)}" onchange="">
+            <span id="value-difficulty">${100 * mines / (rows * columns)}%</span>
+            <br>
+            <br>
+            Filas
+            <br>
+            <input class="swal2-input" type="number" value=${rows} placeholder="rows" id="rows" min="10" max="1000" step="1">
+            <br>
+            Columnas
+            <br>
+            <input class="swal2-input" type="number" value=${columns} placeholder="columns" id="columns" min="10" max="1000" step="1">
+            <br>
+            `,
+        confirmButtonText: "Establecer",
+        confirmButtonColor: "#00224D",
+        cancelButtonText: "Cancelar",
+        cancelButtonColor: "red",
+        showCancelButton: true,
+        background: "#ddd",
+        color: "black",
+        preConfirm: () => {
+            return {
+                columns: document.getElementById("columns").value,
+                rows: document.getElementById("rows").value,
+                difficulty: document.getElementById("difficulty").value
+            }
         }
-      }
     })
     if (!settings) {
-      return
+        return
     }
     rows = Math.floor(settings.rows)
     columns = Math.floor(settings.columns)
@@ -50,7 +54,7 @@ async function settings() {
 
 
 //Generar el table
-function tableGenerator() {
+tableGenerator = () => {
     let html = ""
     for (let r = 0; r < rows; r++) {
     html += '<tr>'
@@ -66,11 +70,11 @@ function tableGenerator() {
     htmlTable.innerHTML = html
     htmlTable.style.width = columns*cellSize+'px'
     htmlTable.style.height = rows*cellSize+'px'
-    htmlTable.style.background = 'lightblue'
+    htmlTable.style.background = ''
 }
 
 //vaciar el table
-function tableClean() {
+tableClean = () => {
     table = []
     for (let c = 0; c < columns; c++) {
         table.push([])
@@ -78,7 +82,7 @@ function tableClean() {
 }
 
 //colocar las mines
-function mineSetter() {
+mineSetter = () => {
     for (let i = 0; i < mines; i++) {
         let c
         let r
@@ -92,7 +96,7 @@ function mineSetter() {
     }
 }
 
-function mineHelper() {
+mineHelper = () => {
     for (let r = 0; r < rows; r++) {
             for (let c = 0; c < columns; c++) {
                 if (!table[c][r]) {
@@ -119,14 +123,14 @@ function mineHelper() {
     }
 }
 
-function tableGameGenerator() {
+tableGameGenerator = () => {
     tableClean()
     mineSetter()
     mineHelper()
 }
 
 //Una vez generado el table html se le agregan los eventos del clic a cada una de las celdas para que el usuario pueda interacturar con el juego
-function addEvents() {
+addEvents = () => {
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns; c++) {
             let cell = document.getElementById('cell-' + c + '-' + r)
@@ -141,7 +145,7 @@ function addEvents() {
 }
 
 //Destapa las celdas a las que se le dan doble clic
-function doubleClick(cell, c, r, me) {
+doubleClick = (cell, c, r, me) => {
     if(!onGame){
         return
     }
@@ -150,7 +154,7 @@ function doubleClick(cell, c, r, me) {
 }
 
 //comportamiento del clic derecho e izquierdo para descubir o marcarlas para protegerlas
-function simpleClick(cell, c, r, me) {
+simpleClick = (cell, c, r, me) => {
     if(!onGame){
         return//el juego ha finalizado
     }
@@ -190,7 +194,7 @@ function simpleClick(cell, c, r, me) {
     tableRefresh()
 }
 
-function areaDiscover(c, r) {
+areaDiscover = (c, r) => {
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
             if (i == 0 && j == 0) {
@@ -213,7 +217,7 @@ function areaDiscover(c, r) {
 }
 
 
-function tableRefresh() {
+tableRefresh = () => {
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns; c++) {
             let cell = document.getElementById('cell-' + c + '-' + r)
@@ -233,8 +237,8 @@ function tableRefresh() {
                 }
             }
             if(table[c][r].status== 'marked') {
-                cell.innerHTML = '<i class="fa-duotone fa-solid fa-flag" style="--fa-primary-color: #000000; --fa-secondary-color: #1bbc06; --fa-secondary-opacity: 1;"></i>'
-                cell.style.background = 'orange'
+                cell.innerHTML = '<i class="fa-duotone fa-solid fa-flag" style="--fa-primary-color: #000000; --fa-secondary-color: #000000; --fa-secondary-opacity: 1;"></i>'
+                cell.style.background = '#9FE2BF'
             }
             if(table[c][r].status== undefined) {
                 cell.innerHTML = ''
@@ -247,7 +251,7 @@ function tableRefresh() {
     minesPanelUpdate()
 }
 
-function winner() {
+winner = () => {
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns; c++) {
             if (table[c][r].status != 'discovered') {
@@ -264,7 +268,7 @@ function winner() {
     onGame = false
 }
 
-function loser() {
+loser = () => {
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns; c++) {
             if (table[c][r].value == -1) {
@@ -290,18 +294,18 @@ function loser() {
     }
 }
 
-function minesPanelUpdate() {
+minesPanelUpdate = () => {
     let panel = document.getElementById('mines')
     panel.innerHTML = mines - marks
 }
 
-function variablesReset() {
+variablesReset = () => {
     marks = 0
     onGame = true
     gameStarted = false
 }
 
-function newGame() {
+newGame = () => {
     variablesReset()
     tableGenerator()
     addEvents()

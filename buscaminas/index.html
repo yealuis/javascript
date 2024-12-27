@@ -9,18 +9,20 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
 </head>
 <body oncontextmenu="return false">
-    <br><br>
-    <span id="new-game" onclick="newGame()">
-        <i class="fa-solid fa-gamepad"></i>
-        Nuevo Juego
-    </span>
-    <span id="mines">
-        000
-    </span>
-    <span id="settings" onclick="settings()">
-        <i class="fa-solid fa-gear"></i>
-        Ajustes
-    </span>
+    <h1>Buscaminas</h1>
+    <header>
+        <span id="new-game" onclick="newGame()">
+            <i class="fa-solid fa-gamepad"></i>
+            Nuevo Juego
+        </span>
+        <span id="mines">
+            000
+        </span>
+        <span id="settings" onclick="settings()">
+            <i class="fa-solid fa-gear"></i>
+            Ajustes
+        </span>
+    </header>
     <table id="table"></table>
 </body>
 <script src="buscaminas.js"></script>
